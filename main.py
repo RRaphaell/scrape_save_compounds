@@ -4,6 +4,7 @@ import argparse
 import logging
 import logging.config
 from config import COMPOUNDS, URL
+from sql_conneciton import CompoundConnection
 
 
 def get_compound_info(c: str) -> dict:
@@ -28,6 +29,24 @@ def get_compound_info(c: str) -> dict:
             "cross_links_count": len(x["cross_links"])}
 
 
+def main(compounds, logger):
+    compound_connection = CompoundConnection()
+
+    for compound in compounds:
+        if compound not in COMPOUNDS:
+            logger.warning(f'compound {compound} is not available')
+            continue
+
+        compound_info = get_compound_info(compound)
+        success = compound_connection.insert_values(compound_info)
+        if success:
+            logger.info(f'request for compound {compound}')
+        else:
+            logger.warning(f'request for compound {compound} is denied, because it already exists')
+
+        time.sleep(1)
+
+
 if __name__ == "__main__":
     my_parser = argparse.ArgumentParser()
 
@@ -45,11 +64,4 @@ if __name__ == "__main__":
     logging.config.fileConfig(fname='log.conf')
     logger = logging.getLogger('root')
 
-    for compound in compounds:
-        if compound not in COMPOUNDS:
-            logger.warning(f'compound {compound} is not available')
-            continue
-
-        print(get_compound_info(compound)["name"])
-        logger.info(f'request for compound {compound}')
-        time.sleep(1)
+    main(compounds, logger)
