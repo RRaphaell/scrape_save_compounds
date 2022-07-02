@@ -1,15 +1,20 @@
 import time
 import requests
+import logging.config
 from src.config import URL, COMPOUNDS, DELAY
 from src.sql.sql_conneciton import CompoundConnection
 
 
 class Pipeline:
-    def __init__(self, compounds, logger):
-        self.compounds = compounds
-        self.logger = logger
+    def __init__(self, compounds):
+        self.compounds = COMPOUNDS if compounds is None else compounds  # scrape all compounds as default
+
+        # create logger
+        logging.config.fileConfig(fname='src/log.conf')
+        self.logger = logging.getLogger('root')
 
     def run(self):
+        compounds_info = []
         compound_connection = CompoundConnection()
 
         for compound in self.compounds:
@@ -21,10 +26,13 @@ class Pipeline:
             success = compound_connection.insert_values(compound_info)
             if success:
                 self.logger.info(f'request for compound {compound}')
+                compounds_info.append(compound_info)
             else:
                 self.logger.warning(f'request for compound {compound} is denied, because it already exists')
 
             time.sleep(DELAY)
+
+        return compounds_info
 
     def _get_compound_info(self, c: str) -> dict:
         """makes request for URL and return this information
