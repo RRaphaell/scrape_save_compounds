@@ -12,10 +12,10 @@ class Pipeline:
         # create logger
         logging.config.fileConfig(fname='src/log.conf')
         self.logger = logging.getLogger('root')
+        self.compound_connection = CompoundConnection()
 
     def run(self):
         compounds_info = []
-        compound_connection = CompoundConnection()
 
         for compound in self.compounds:
             if compound not in COMPOUNDS:
@@ -23,7 +23,7 @@ class Pipeline:
                 continue
 
             compound_info = self._get_compound_info(compound)
-            success = compound_connection.insert_values(compound_info)
+            success = self.compound_connection.insert_values(compound_info)
             if success:
                 self.logger.info(f'request for compound {compound}')
                 compounds_info.append(compound_info)
@@ -54,5 +54,3 @@ class Pipeline:
                 "inchi_key": x["inchi_key"],
                 "smiles": x["smiles"],
                 "cross_links_count": len(x["cross_links"])}
-
-

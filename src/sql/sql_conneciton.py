@@ -1,3 +1,4 @@
+import pandas as pd
 from src.sql.sql_settings import postgresql as settings
 from sqlalchemy import Table, Column, MetaData, Integer, String
 from sqlalchemy import create_engine
@@ -20,11 +21,11 @@ class CompoundConnection:
         self.connection = None
 
     def start_connection(self):
-        self.connection = self.engine.connect()
+        if self.connection is None:
+            self.connection = self.engine.connect()
 
     def insert_values(self, values: dict):
-        if self.connection is None:
-            self.start_connection()
+        self.start_connection()
 
         # check if compound already exists
         query = self.compounds_table.select().where(self.compounds_table.c.compound == values["compound"])
@@ -55,3 +56,13 @@ class CompoundConnection:
         url = f"postgresql://{user}:{passwd}@{host}:{port}/{db}"
         engine = create_engine(url)
         return engine
+
+    def show_table(self):
+        self.start_connection()
+        query = self.compounds_table.select()
+        query_res = self.connection.execute(query)
+
+        df = pd.DataFrame(query_res.fetchall())
+        df.columns = query_res.keys()
+        df = df.applymap(lambda x: x[:10]+'...' if len(str(x)) > 10 else x)
+        print(df)
