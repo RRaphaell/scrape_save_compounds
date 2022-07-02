@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+    postgresql_database:
+        image: postgres:latest
+        environment:
+            - POSTGRES_USER=alpha
+            - POSTGRES_PASSWORD=password
+            - POSTGRES_DB=alphadb
+        ports:
+            - "5432:5432"
+        restart: always
