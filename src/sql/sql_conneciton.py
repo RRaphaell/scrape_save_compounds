@@ -1,4 +1,4 @@
-from sql_settings import postgresql as settings
+from src.sql.sql_settings import postgresql as settings
 from sqlalchemy import Table, Column, MetaData, Integer, String
 from sqlalchemy import create_engine
 
