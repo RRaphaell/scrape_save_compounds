@@ -2,6 +2,8 @@ import pandas as pd
 from src.sql.sql_settings import postgresql as settings
 from sqlalchemy import Table, Column, MetaData, Integer, String
 from sqlalchemy import create_engine
+from sqlalchemy.engine import Engine
+from typing import Dict
 
 
 class CompoundConnection:
@@ -24,7 +26,7 @@ class CompoundConnection:
         if self.connection is None:
             self.connection = self.engine.connect()
 
-    def insert_values(self, values: dict):
+    def insert_values(self, values: Dict[str, str]) -> bool:
         self.start_connection()
 
         # check if compound already exists
@@ -37,7 +39,7 @@ class CompoundConnection:
 
         return False
 
-    def _get_engine(self):
+    def _get_engine(self) -> Engine:
         keys = ['pguser', 'pgpasswd', 'pghost', 'pgport', 'pgdb']
         if not all(key in keys for key in settings.keys()):
             raise Exception('Bad config file')
@@ -52,7 +54,7 @@ class CompoundConnection:
         return engine
 
     @staticmethod
-    def _create_engine(user, passwd, host, port, db):
+    def _create_engine(user: str, passwd: str, host: str, port: int, db: str) -> Engine:
         url = f"postgresql://{user}:{passwd}@{host}:{port}/{db}"
         engine = create_engine(url)
         return engine

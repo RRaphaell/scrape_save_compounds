@@ -3,10 +3,11 @@ import requests
 import logging.config
 from src.config import URL, COMPOUNDS, DELAY
 from src.sql.sql_conneciton import CompoundConnection
+from typing import List, Dict
 
 
 class Pipeline:
-    def __init__(self, compounds):
+    def __init__(self, compounds: List[str]):
         self.compounds = COMPOUNDS if compounds is None else compounds  # scrape all compounds as default
 
         # create logger
@@ -14,7 +15,7 @@ class Pipeline:
         self.logger = logging.getLogger('root')
         self.compound_connection = CompoundConnection()
 
-    def run(self):
+    def run(self) -> List[Dict[str, str]]:
         compounds_info = []
 
         for compound in self.compounds:
@@ -34,7 +35,7 @@ class Pipeline:
 
         return compounds_info
 
-    def _get_compound_info(self, c: str) -> dict:
+    def _get_compound_info(self, c: str) -> Dict[str, str]:
         """makes request for URL and return this information
 
         Args:
