@@ -1,6 +1,6 @@
-postgresql = {'pguser': 'alpha',
+postgresql = {'pguser': 'postgres',
               'pgpasswd': 'password',
               'pghost': 'localhost',
               'pgport': 5432,
-              'pgdb': 'alphadb'
+              'pgdb': 'compoundsdb'
               }
