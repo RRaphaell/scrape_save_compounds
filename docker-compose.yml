@@ -1,12 +1,18 @@
 version: '3.4'
 
 services:
-    postgresql_database:
-        image: postgres:latest
+    db:
+        container_name: compounds
+        image: postgres
         environment:
-            - POSTGRES_USER=alpha
-            - POSTGRES_PASSWORD=password
-            - POSTGRES_DB=alphadb
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: compoundsdb
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
         ports:
-            - "5432:5432"
+          - "5432:5432"
         restart: always
+
+volumes:
+  postgres_data:
