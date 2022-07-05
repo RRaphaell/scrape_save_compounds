@@ -8,6 +8,8 @@ from typing import Dict
 
 class CompoundConnection:
     def __init__(self):
+        """Defining the class values and creating data table
+        """
         self.meta = MetaData()
 
         self.compounds_table = Table("compounds", self.meta,
@@ -23,10 +25,19 @@ class CompoundConnection:
         self.connection = None
 
     def start_connection(self):
+
         if self.connection is None:
             self.connection = self.engine.connect()
 
     def insert_values(self, values: Dict[str, str]) -> bool:
+        """Inserting values into database
+
+        Args:
+          values (dict of [str, str]): compounds(s) name(s)
+
+        Returns:
+          information if value was inserted or not
+        """
         self.start_connection()
 
         # check if compound already exists

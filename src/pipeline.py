@@ -8,6 +8,12 @@ from typing import List, Dict
 
 class Pipeline:
     def __init__(self, compounds: List[str]):
+        """Defining the class values
+
+        Args:
+          compounds (List of strings): compounds(s) name(s)
+
+        """
         self.compounds = COMPOUNDS if compounds is None else compounds  # scrape all compounds as default
 
         # create logger

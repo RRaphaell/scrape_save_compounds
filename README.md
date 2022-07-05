@@ -3,8 +3,13 @@
   
 ## Getting Started  
   
+### Short layout of project structure
+
+![img.png](Images/img.png)
+
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.  
-  
+**MAKE SURE PORT 5432 and 5433 ARE FREE TO USE**
+
 ## Prerequisites  
   
 In this block we install all the necessary tools for project to run correctly on the IDE.
