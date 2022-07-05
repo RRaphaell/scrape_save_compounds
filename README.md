@@ -1,5 +1,14 @@
 # scrape_save_compounds
 
+### prepare environment
+```
+conda create --name <env_name>
+conda activate <env_name>
+pip install -r requirements.txt
+
+# run docker
+docker-compose up -d
+```
 
 ### run program
 ```
