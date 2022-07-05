@@ -52,6 +52,7 @@ Adding STI compound to database and giving warning on ADP, because it is already
 python main.py -t  
 ```  
 ![img_4.png](Images/img_4.png)
+
 Showing data of the current database
   
 ## Run tests  
