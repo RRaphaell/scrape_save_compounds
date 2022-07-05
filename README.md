@@ -8,7 +8,7 @@
 ![img.png](Images/img.png)
 
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.  
-**MAKE SURE PORT 5432 and 5433 ARE FREE TO USE**
+Make sure **PORT:5432** and **PORT:5433** are free to be used in this project.
 
 ## Prerequisites  
   
