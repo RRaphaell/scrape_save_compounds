@@ -29,17 +29,20 @@ docker-compose up -d
 python main.py  
 ```  
 ![img_1.png](Images/img_1.png)
+
 Running project and adding all compounds to the database if they are not in it
 
 ```  
 python main.py -c ADP 
 ```   
 ![img_2.png](Images/img_2.png)
+
 Adding ADP compound to the database
 ```  
 python main.py -c ADP STI  
 ```  
 ![img_3.png](Images/img_3.png)
+
 Adding STI compound to database and giving warning on ADP, because it is already in database
 
 
