@@ -3,24 +3,30 @@ from src.config import COMPOUNDS
 from src.pipeline import Pipeline
 
 
-if __name__ == "__main__":
-    my_parser = argparse.ArgumentParser()
+def create_parser():
+    parser = argparse.ArgumentParser()
 
     # Add the arguments
-    my_parser.add_argument('-c',
-                           '--compounds',
-                           nargs='+',
-                           help=f'compound names from this list {COMPOUNDS}')
-    my_parser.add_argument('-t',
-                           '--table',
-                           nargs='?',
-                           const=True,
-                           default=False,
-                           help=f'print table')
+    parser.add_argument('-c',
+                        '--compounds',
+                        nargs='+',
+                        help=f'compound names from this list {COMPOUNDS}')
+    parser.add_argument('-t',
+                        '--table',
+                        nargs='?',
+                        const=True,
+                        default=False,
+                        help=f'print table')
+
+    return parser
+
+
+if __name__ == "__main__":
+    arg_parser = create_parser()
 
     # retrieve arguments
-    compounds = my_parser.parse_args().compounds
-    show_table = my_parser.parse_args().table
+    compounds = arg_parser.parse_args().compounds
+    show_table = arg_parser.parse_args().table
 
     # run pipeline
     pipeline = Pipeline(compounds)
